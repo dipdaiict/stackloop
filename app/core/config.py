@@ -15,9 +15,8 @@ class PostgresSettings(BaseSettings):
 class RedisSettings(BaseSettings):
     redis_host: str
     redis_port: int
-    redis_username: str
     redis_password: str
-    redis_db: int = 0  # Default DB 0
+    redis_db: int = 0
 
     model_config = ConfigDict(env_file=".env", extra="ignore")
 
