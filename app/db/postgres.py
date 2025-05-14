@@ -29,10 +29,20 @@ async_session_factory = sessionmaker(
 
 
 # Database utility class
+# Database utility class
 class Database:
     def __init__(self):
         self._engine = engine
         self._session_factory = async_session_factory
+
+    async def connect(self):
+        """Placeholder for future connection management."""
+        Logger.info("✅ Async SQLAlchemy engine is ready.")
+
+    async def disconnect(self):
+        """Dispose of the SQLAlchemy engine."""
+        await self._engine.dispose()
+        Logger.info("🛑 SQLAlchemy engine disposed.")
 
     async def get_session(self) -> AsyncSession:
         """Dependency function to be used in routes or services."""
@@ -42,4 +52,4 @@ class Database:
 
 # Create a singleton instance
 db = Database()
-Logger.info("Async SQLAlchemy database initialized.")
+# Logger.info("Async SQLAlchemy database initialized.")

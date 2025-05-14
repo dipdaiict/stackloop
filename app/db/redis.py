@@ -15,7 +15,7 @@ class RedisClient:
 
     async def connect(self) -> redis.Redis:
         if self._client:
-            return self._client  # Return existing connection if already established
+            return self._client
 
         self._client = redis.Redis(
             host=redis_settings.redis_host,
@@ -32,11 +32,13 @@ class RedisClient:
                 Logger.info("✅ Redis client connected successfully.")
                 return self._client
             except redis.ConnectionError:
-                Logger.warning(f"❌ Redis connection failed (attempt {attempt}/{retries})")
+                Logger.warning(f"""❌ Redis connection failed 
+                            (attempt {attempt}/{retries})""")
                 if attempt < retries:
                     await asyncio.sleep(2)
                 else:
-                    Logger.error("🚨 Failed to connect to Redis after all retries.")
+                    Logger.error("""🚨 Failed to connect to " \
+                                Redis after all retries.""")
                     raise
 
     async def get_client(self) -> redis.Redis:
@@ -47,4 +49,4 @@ class RedisClient:
 
 # Instantiate
 redis_client = RedisClient()
-Logger.info("📦 Redis client instance created.")
+# Logger.info("📦 Redis client instance created.")
